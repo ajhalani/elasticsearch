@@ -330,7 +330,7 @@ public class DateFieldMapper extends NumberFieldMapper<Long> {
     public Query rangeQuery(Object lowerTerm, Object upperTerm, boolean includeLower, boolean includeUpper, @Nullable DateTimeZone timeZone, @Nullable QueryParseContext context) {
         return NumericRangeQuery.newLongRange(names.indexName(), precisionStep,
                 lowerTerm == null ? null : parseToMilliseconds(lowerTerm, context, false, timeZone),
-                upperTerm == null ? null : parseToMilliseconds(upperTerm, context, includeUpper, timeZone),
+                upperTerm == null ? null : parseToMilliseconds(upperTerm, context, true, timeZone),
                 includeLower, includeUpper);
     }
 
@@ -373,7 +373,7 @@ public class DateFieldMapper extends NumberFieldMapper<Long> {
             } else {
                 String value = convertToString(upperTerm);
                 cache = explicitCaching || !hasNowExpressionWithNoRounding(value);
-                upperVal = parseToMilliseconds(value, context, includeUpper, timeZone);
+                upperVal = parseToMilliseconds(value, context, true, timeZone);
             }
         }
 
